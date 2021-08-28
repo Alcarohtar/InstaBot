@@ -15,11 +15,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 #VARIABILI GENERICHE
 #Lista commenti default
-in_file_comment=open("comment_InstaFollow", "r")
+in_file_comment = open("comment_InstaFollow", "r")
 ListaCommenti=in_file_comment.readlines()
 in_file_comment.close()
 #ListaCommenti = ["bellissima", "grande scatto", "fantastica", "davvero bella", "top", "mi piace molto"]
-
+in_file_tag = open("tag_InstaFollow", "r")
+listaTag = in_file_tag.readlines()
+in_file_tag.close()
 
 #FUNZIONI
 def InserisciInRicerca(tagDaRicercare):
@@ -106,7 +108,7 @@ while selezione_ok == 0:
         selezione_ok=0
 
 
-listaTag = input("Inserisci i tag da ricercare (max 3), senza asterisco e con uno spazio tra ogni parola: " ).split()
+#listaTag = input("Inserisci i tag da ricercare (max 3), senza asterisco e con uno spazio tra ogni parola: " ).split()
 print(listaTag)
 numeroTag = len(listaTag)
 numeroFotoDaVisual = int(input("A quante foto per ogni tag vuoi mettere un like o un commento?: "))
