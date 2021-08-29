@@ -1,6 +1,5 @@
 #! /usr/bin/python3
 import random
-import os
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -23,6 +22,14 @@ in_file_comment.close()
 in_file_tag = open("tag_InstaFollow", "r")
 listaTag = in_file_tag.readlines()
 in_file_tag.close()
+#Inclusione file user e password
+in_file_usrpwd = open("userpwd_InstaFollow", "r")
+listaUsrPwd = in_file_usrpwd.readlines()
+in_file_usrpwd.close()
+username_tmp = str(listaUsrPwd[0])
+username = username_tmp.strip("username: ")
+password_tmp = str(listaUsrPwd[1])
+password = password_tmp.strip("password: ")
 
 #FUNZIONI
 def InserisciInRicerca(tagDaRicercare):
@@ -67,8 +74,8 @@ def Commenta():
 browser = webdriver.Firefox()
 browser.get('https://www.instagram.com/')
 sleep(5)
-username = input("Inserisci il tuo user: ")
-password = input("Inserisci la tua password: ")
+#username = input("Inserisci il tuo user: ")
+#password = input("Inserisci la tua password: ")
 
 try:
     WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/button[1]")))
@@ -85,11 +92,11 @@ AccediInput = browser.find_elements_by_class_name("Igw0E")[0]
 usernameInput.send_keys(username)
 passwInput.send_keys(password)
 AccediInput.click()
-print("Chiudi tutti i popup aperti")
+print("Chiudo tutti i popup aperti")
 sleep(6)
 
 #Questo while serve per chiudere, nel caso fossero presenti, tutti i popup
-while not (PuoiProcedere):
+while not (PuoiProcedere and (EC.element_to_be_clickable((By.CSS_SELECTOR, ".cGcGK > div:nth-child(2) > div:nth-child(1)")))):
     try:
         WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "button.sqdOP:nth-child(1)")))
         SalvareLeInfo = browser.find_element_by_css_selector("button.sqdOP:nth-child(1)")
@@ -107,12 +114,13 @@ while not (PuoiProcedere):
         print("...........")
 
     try:
-        Homepage = browser.find_element_by_css_selector(".cGcGK > div:nth-child(2) > div:nth-child(1)").is_selected()
+        Homepage = browser.find_element_by_css_selector(".cGcGK > div:nth-child(2) > div:nth-child(1)").is_displayed()
         PuoiProcedere = 1
+        print("Ok, let's go...")
     except:
         PuoiProcedere = 0
 
-    print("Ok, let's go...")
+
 sleep(2)
 
 print(""
