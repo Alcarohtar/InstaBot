@@ -180,7 +180,7 @@ for i in listaTag:
     RicercaInput = browser.find_elements_by_class_name("XTCLo")[0]
     InserisciInRicerca(i)
     element = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Nnq7C")))
-    PrimaFoto = browser.find_elements_by_class_name("v1Nh3")[0]
+    PrimaFoto = browser.find_element_by_xpath("/html/body/div[1]/section/main/article/div[2]/div/div[1]/div[1]")
     cliccaFoto()
     if selezione == 1:
         while j < numeroFotoDaVisual:
@@ -207,4 +207,5 @@ for i in listaTag:
     sleep(5)
     browser.get('https://www.instagram.com/')
 
+print("******* B.O.T. SUCCESSFUL **********")
 browser.close()
