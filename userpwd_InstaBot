@@ -1,5 +1,5 @@
-username: esempio_user
-password: esempio_pwd
+username: user_example
+password: pwd_example
 
 Modify user and password.
 Not erase the : and space symbols
