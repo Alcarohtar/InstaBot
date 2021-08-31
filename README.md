@@ -1,5 +1,5 @@
 InstaBot is an instagram bot to add like and comments automatically.
-It has been tested on linux os. New tests on other OS will be done soon.
+It has been tested on linux os and MacOs. New tests on windows will be done soon.
 
 What do you need?
 - Firefox browser
