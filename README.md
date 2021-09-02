@@ -11,5 +11,5 @@ What do you need?
 - Download geckoodriver (you can find it on web for every OS) and copy it in one of the system path inside the $PATH variable. Usually /bin, /usr/local/bin and so on
 
 
-***** It has been tested on linux os and MacOs. New tests on windows will be done soon.******
-***** For MacOs use the .py file and start it from terminal. Exe file is not available ******
+***** It has been tested on linux os and MacOs. New tests on windows will be done soon.
+***** For MacOs use the .py file and start it from terminal. Exe file is not available 
