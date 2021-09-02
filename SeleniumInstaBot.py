@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 ###################################
-# PROGRAMMA BOT PER INSTAGRAM
+#          INSTAGRAM BOT
 ###################################
 # Global Variables
 while_popup_closed = 0
@@ -58,7 +58,7 @@ def put_like():
         (By.CSS_SELECTOR, ".fr66n > button:nth-child(1) > div:nth-child(1) > span:nth-child(1) > svg:nth-child(1)")))
     like = browser.find_element_by_css_selector(
         ".fr66n > button:nth-child(1) > div:nth-child(1) > span:nth-child(1) > svg:nth-child(1)")
-    #like.click()  # comment this line to not put a like
+    like.click()  # comment this line to not put a like
     sleep(1)
 
 
@@ -74,36 +74,66 @@ def insert_comment():
     textarea.send_keys(random_comment)
     sleep(3)
     public_button = browser.find_element_by_css_selector("button.sqdOP:nth-child(4)")
-    #public_button.click()  # comment this line if you want to debug and not put a comment
+    public_button.click()  # comment this line if you want to debug and not put a comment
     sleep(3)
 
 
 def follow():
     """Follow user and save its name"""
-    WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[6]/div[2]/div/article/header/div[2]/div[1]/div[2]/button")))
-    follow_button = browser.find_element_by_xpath("/html/body/div[6]/div[2]/div/article/header/div[2]/div[1]/div[2]/button")
-    #follow_button.click() # comment this line if you want to debug and not follow any user
-    sleep(2)
+    follower_just_added = 0
     user_to_save = browser.find_element_by_css_selector(".e1e1d > span:nth-child(1) > a:nth-child(1)")
     user_to_save_name = user_to_save.get_attribute("href")
-    print("New follower: " + user_to_save_name)
-    in_file_follower = open("follower_InstaBot", "a")
-    in_file_follower.write(user_to_save_name + "\n")
-    in_file_follower.close()
+    in_file_follower_hist = open("follower_history_InstaBot", "r")
+    list_hist_follower = in_file_follower_hist.readlines()
+    in_file_follower_hist.close()
+    for hist_follow in list_hist_follower:
+        if hist_follow.rstrip("\n") != user_to_save_name:
+            continue
+        else:
+            follower_just_added = 1
+            print("User "+user_to_save_name+" already present in our list. Not added")
+            break
+    if follower_just_added == 0:
+        try:
+            WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[6]/\
+                                                    div[2]/div/article/header/div[2]/div[1]/div[2]/button")))
+            follow_button = browser.find_element_by_xpath("/html/body/div[6]/div[2]/div/article/header/\
+                                                    div[2]/div[1]/div[2]/button")
+            follow_button.click()  # comment this line if you want to debug and not follow any user
+            sleep(2)
+        except:
+            print("User already added")
+        else:
+            user_to_save = browser.find_element_by_css_selector(".e1e1d > span:nth-child(1) > a:nth-child(1)")
+            user_to_save_name = user_to_save.get_attribute("href")
+            print("New follower: " + user_to_save_name)
+            in_file_follower = open("follower_InstaBot", "a")  #Save the new users in file. This file will be
+            in_file_follower.write(user_to_save_name + "\n")   #blanked when unfollow is going to call
+            in_file_follower.close()
+            in_file_follower_hist = open("follower_history_InstaBot", "a")  #Save the new users in file. This file
+            in_file_follower_hist.write(user_to_save_name + "\n")           #will never be blanked since it will be
+            in_file_follower_hist.close()                                   #used to not follow again the same user
 
 
-def unfollow(follower):
+def unfollow(follower_parameter):
     """Unfollow all user in follow_InstaBot file"""
     sleep(2)
-    browser.get(follower)
-    WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/div/div[2]/div/span/span[1]/button/div")))
-    unfollow_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/div/div[2]/div/span/span[1]/button/div")
-    unfollow_button.click()
-    WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[6]/div/div/div/div[3]/button[1]")))
-    unfollow_button = browser.find_element_by_xpath("/html/body/div[6]/div/div/div/div[3]/button[1]")
-    unfollow_button.click()
-    sleep(3)
-    print("The user " +follower+ "has been unfollowed\n")
+    browser.get(follower_parameter)
+    try:
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/section/main/div/\
+                                                header/section/div[1]/div[1]/div/div[2]/div/span/span[1]/button/div")))
+        unfollow_button = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/\
+                                                div[1]/div/div[2]/div/span/span[1]/button/div")
+        unfollow_button.click()
+    except:
+        pass
+    else:
+        WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[6]/div/div/div/\
+                                                div[3]/button[1]")))
+        unfollow_button = browser.find_element_by_xpath("/html/body/div[6]/div/div/div/div[3]/button[1]")
+        unfollow_button.click()
+        sleep(3)
+        print("The user " + follower_parameter + "has been unfollowed\n")
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -150,7 +180,7 @@ if selection != 6:
     print("Ok, let's go...")
     print("\n")
 else:
-    num_photo_showed=0
+    num_photo_showed = 0
     print("Ok, let's go...")
     print("\n")
 
@@ -159,8 +189,6 @@ else:
 browser = webdriver.Firefox()
 browser.get('https://www.instagram.com/')
 sleep(5)
-# username = input("Insert your username: ")
-# password = input("Insert the password: ")
 
 print("I'm closing all popup")
 
