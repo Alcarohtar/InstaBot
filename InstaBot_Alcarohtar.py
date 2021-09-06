@@ -45,7 +45,11 @@ password = password_tmp.strip("password: ")
 
 
 # FUNCTIONS
+def closeAll():
+    exit()
+
 def createGUI(windows_tkinter):
+    """Tkinter GUI creation"""
     # Nuova finestra tkinter
     windows_tkinter.title('InstaBot Alcarohtar')
     style = Style()
@@ -57,27 +61,28 @@ def createGUI(windows_tkinter):
                               "- Select in second box the action to perform\n"
                               "- Press RUN button to start or X to exit from the program\n"
                               "- Once program has started close the browser if you want to abort\n")
-    info_label_1.grid(row=5, column=0)
+    info_label_1.grid(row=5, column=0, pady=14)
     choices_box_label = Label(windows_tkinter, background='#ffffff', font=('Helvetica', 10, 'bold'),
                               text="SELECT AN OPTION")
     choices_box_label.grid(row=3, column=1)
     tb_num_photo_label = Label(windows_tkinter, background='#ffffff', font=('Helvetica', 10, 'bold'),
                                text="NUMBER OF PHOTOS")
     tb_num_photo_label.grid(row=1, column=1)
-    info_label_1 = Label(windows_tkinter, background='#000000', foreground='#a61022', font=('Helvetica', 10, 'bold'),
-                         text="\
-     DEVELOPER: Alcarohtar (Luigi Rocco)", anchor='se')
-    info_label_1.grid(row=5, column=1, pady=10)
+    info_label_1 = Label(windows_tkinter, background='#000000', width=50, foreground='#a61022', font=('Helvetica', 10, 'bold'),
+                         text="\n"
+                              " DEVELOPER: Alcarohtar (Luigi Rocco) \n"
+                              "", anchor='center')
+    info_label_1.grid(row=5, column=1, pady=10, padx=10)
     # Number of photos box
-    tb_num_photo = Entry(windows_tkinter, width=35)
+    tb_num_photo = Entry(windows_tkinter, width=42)
     tb_num_photo.insert(0, 1)
     tb_num_photo.grid(row=2, column=1)
     # Option box
     def_var_choices = StringVar(windows_tkinter)
     def_var_choices.set(choices[0])
-    choices_box = Combobox(windows_tkinter, textvariable=def_var_choices, values=choices, width=35)
+    choices_box = Combobox(windows_tkinter, textvariable=def_var_choices, values=choices, width=41)
     choices_box['state'] = 'readonly'
-    choices_box.grid(row=4, column=1, padx=20, pady=10)
+    choices_box.grid(row=4, column=1, padx=20)
     # Proceed button
     proceed_button = Button(windows_tkinter, style="Run.TButton", text="RUN", command=windows_tkinter.quit)
     proceed_button.grid(row=1, column=0, rowspan=4, padx=20, ipadx=200, ipady=30)
@@ -91,10 +96,6 @@ def createGUI(windows_tkinter):
     print("\n")
     return selected_option, tb_num_photo_showed
 
-
-def closeAll(windows_tkinter):
-    windows_tkinter.destroy()
-    exit()
 
 def insert_in_search_field(tag_to_search):
     """Insert a tag on search field and click on Enter"""
