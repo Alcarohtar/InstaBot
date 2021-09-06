@@ -27,4 +27,3 @@ Second file is never blanked since it is useful to check if user has ever been f
 '6: Unfollow users in follow_InstaBot file'  
   
 ***It has been tested on linux os and MacOs. New tests on windows will be done soon.***  
-***For MacOs use the .py file and start it from terminal. Exe file is not available***
