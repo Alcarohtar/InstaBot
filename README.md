@@ -31,8 +31,9 @@ Second file is never blanked since it is useful to check if user has ever been f
 - InstaBot_Alcarohtar.py is the python source code. It could be useful if you need to check or modify the code. It could be run by terminal as **python3 InstaBot_Alcarohtar.py**
 - InstaBot_Alcarohtar and InstaBot_Alcarohtar_MacOs are the two exe files for Linux or MacOs system. 
 - comment_InstaBot is the file where to add the comments. They have to be added one for each line.
-- tag_InstaBot is the file where to add the tag index, one for each line, with # at the beginning
+- tag_InstaBot is the file where to add the tag index, one for each line, with # at the beginning.
 - follower_InstaBot has not to be modified. It records the user followed. It will be completely deleted when unfollowed option (6) is selected. 
-- follower_history_InstaBot has never erased. It records the user followed history, so they will never follow again after unfollow
+- follower_history_InstaBot has never erased. It records the user followed history, so they will never follow again after unfollow.
+- userpwd_InstaBot is useful to add user and password to login on Instagram. Not remove the "user:" and "password:".
   
 ***It has been tested on linux os and MacOs. New tests on windows will be done soon.***  
