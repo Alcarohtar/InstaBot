@@ -42,7 +42,10 @@ username_tmp = str(listaUsrPwd[0])
 username = username_tmp.strip("username: ")
 password_tmp = str(listaUsrPwd[1])
 password = password_tmp.strip("password: ")
-
+# Tag file inclusion
+in_file_log = open("log_InstaBot", "w")
+in_file_log.write("INSTABOT ALCAROHTAR LOG\n\n")
+in_file_log.close()
 
 # FUNCTIONS
 def closeAll():
@@ -91,9 +94,11 @@ def createGUI(windows_tkinter):
     choices_box_number = choices_box.get()
     selected_option = int((choices.index(choices_box_number)) + 1)
     tb_num_photo_showed = int(tb_num_photo.get())
-    print(selected_option)
-    print(tb_num_photo_showed)
-    print("\n")
+    str_option_selected = "You selected the option: " + choices_box_number
+    str_number_photos = "You have chosen to browse " + str(tb_num_photo_showed) + " photos"
+    in_file_log = open("log_InstaBot", "a")
+    in_file_log.write(str_option_selected + "\n" + str_number_photos + "\n")
+    in_file_log.close()
     return selected_option, tb_num_photo_showed
 
 
@@ -153,7 +158,9 @@ def follow():
             continue
         else:
             follower_just_added = 1
-            print("User "+user_to_save_name+" already present in our list. Not added")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("User " + user_to_save_name + " already present in our list. Not added\n")
+            in_file_log.close()
             break
     if follower_just_added == 0:
         try:
@@ -164,11 +171,15 @@ def follow():
             follow_button.click()  # comment this line if you want to debug and not follow any user
             sleep(2)
         except:
-            print("User already added")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("User already added\n")
+            in_file_log.close()
         else:
             user_to_save = browser.find_element_by_css_selector(".e1e1d > span:nth-child(1) > a:nth-child(1)")
             user_to_save_name = user_to_save.get_attribute("href")
-            print("New follower: " + user_to_save_name)
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("New follower: " + user_to_save_name + ".\n")
+            in_file_log.close()
             in_file_follower = open("follower_InstaBot", "a")  #Save the new users in file. This file will be
             in_file_follower.write(user_to_save_name + "\n")   #blanked when unfollow is going to call
             in_file_follower.close()
@@ -195,7 +206,9 @@ def unfollow(follower_parameter):
         unfollow_button = browser.find_element_by_xpath("/html/body/div[6]/div/div/div/div[3]/button[1]")
         unfollow_button.click()
         sleep(3)
-        print("The user " + follower_parameter + "has been unfollowed\n")
+        in_file_log = open("log_InstaBot", "a")
+        in_file_log.write("The user " + follower_parameter + "has been unfollowed.\n")
+        in_file_log.close()
 
 
 if __name__ == "__main__":
@@ -214,15 +227,21 @@ if __name__ == "__main__":
     browser.get('https://www.instagram.com/')
     sleep(5)
 
-    print("I'm closing all popup")
+    in_file_log = open("log_InstaBot", "a")
+    in_file_log.write("I'm closing all popup\n")
+    in_file_log.close()
 
     try:
         WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/button[1]")))
         Cookie = browser.find_element_by_xpath("/html/body/div[4]/div/div/button[1]")
         Cookie.click()
-        print("Cookie popup has been closed")
+        in_file_log = open("log_InstaBot", "a")
+        in_file_log.write("Cookie popup has been closed\n")
+        in_file_log.close()
     except:
-        print("Cookie popup was already closed")
+        in_file_log = open("log_InstaBot", "a")
+        in_file_log.write("Cookie popup was already closed\n")
+        in_file_log.close()
 
     sleep(6)
     usernameInput = browser.find_elements_by_class_name("_2hvTZ")[0]
@@ -241,31 +260,39 @@ if __name__ == "__main__":
             WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "button.sqdOP:nth-child(1)")))
             SalvareLeInfo = browser.find_element_by_css_selector("button.sqdOP:nth-child(1)")
             SalvareLeInfo.click()
-            print("Save the Info popup has been closed")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Save the Info popup has been closed\n")
+            in_file_log.close()
         except:
-            print("Save the Info popup was already closed")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Save the Info popup was already closed\n")
+            in_file_log.close()
 
         try:
             WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.aOOlW:nth-child(2)")))
             AttivaLeNotifiche = browser.find_element_by_css_selector("button.aOOlW:nth-child(2)")
             AttivaLeNotifiche.click()
-            print("Enable notification popup has been closed")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Enable notification popup has been closed\n")
+            in_file_log.close()
         except:
-            print("Enable notification popup was already closed")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Enable notification popup was already closed\n")
+            in_file_log.close()
 
         try:
             Homepage = browser.find_element_by_css_selector(".cGcGK > div:nth-child(2) > div:nth-child(1)").is_displayed()
             can_proceed = 1
-            print(".............")
-            print("..........")
-            print("...done\n")
+
         except:
             can_proceed = 0
             while_popup_closed += 1
 
         if while_popup_closed > 3:
             browser.quit()
-            print("Something was wrong. Please check the _InstaBot files.")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Something was wrong. Please check the _InstaBot files.\n")
+            in_file_log.close()
             exit()
 
     sleep(2)
@@ -274,7 +301,9 @@ if __name__ == "__main__":
 
     if selection != 6:
         for i in listaTag:
-            print("Tag " + i + "is running\n")
+            in_file_log = open("log_InstaBot", "a")
+            in_file_log.write("Tag " + i + "has run\n")
+            in_file_log.close()
             j = 0
             Search_Input = browser.find_elements_by_class_name("XTCLo")[0]
             insert_in_search_field(i)
@@ -320,7 +349,9 @@ if __name__ == "__main__":
                     RightArrow.click()
                     j += 1
             else:
-                print("Selection out of range")
+                in_file_log = open("log_InstaBot", "a")
+                in_file_log.write("Selection out of range\n")
+                in_file_log.close()
 
             sleep(5)
             browser.get('https://www.instagram.com/')
@@ -335,6 +366,8 @@ if __name__ == "__main__":
         in_file_follower.close()
 
 
-    print("******* B.O.T. SUCCESSFUL **********")
+    in_file_log = open("log_InstaBot", "a")
+    in_file_log.write("******* B.O.T. SUCCESSFUL **********")
+    in_file_log.close()
     browser.close()
 
